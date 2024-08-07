@@ -1,13 +1,33 @@
-const Rover = require('../rover.js');
-const Message = require('../message.js');
-const Command = require('../command.js');
 
-// NOTE: If at any time, you want to focus on the output from a single test, feel free to comment out all the others.
-//       However, do NOT edit the grading tests for any reason and make sure to un-comment out your code to get the autograder to pass.
+  // Test 7: Ensure the constructor requires a position
+// Main test suite for the Rover class
+describe('Rover class', () => {
+
+  // Test 7: Ensure the constructor requires a position
+  // NOTE: Must place new object inside a function to test without parameter. This causes the error.
+  test('constructor sets position and default values for mode and generatorWatts', () => {
+    expect(
+      () => {
+        new Rover();
+      }).toThrow(new Error('Rover position required.'));
+    });
 
 
-describe("Rover class", function() {
 
-  // 7 tests here!
+  // Test 8: Check if receiveMessage returns the correct message name
+  test('response returned by receiveMessage contains name of message', () => {
+    
+    // Create commands, a message, and a rover
+    let commands = [
+      new Command('MODE_CHANGE', 'LOW_POWER'),
+      new Command('STATUS_CHECK'),
+    ];
 
-});
+    let message = new Message('New message!', commands);
+    let rover = new Rover(100);
+
+    // Send the message to the rover and check the response
+    let response = rover.receiveMessage(message);
+    expect(response.message).toEqual('New message!');
+  });
+  
